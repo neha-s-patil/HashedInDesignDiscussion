@@ -4,15 +4,35 @@ import { useMemo, useState } from 'react';
 
 function App() {
 
-  const [counter,setCounter] = useState(0);
+  // const [counter,setCounter] = useState(0);
 
-  const functionMemo=(value)=>{
-    return value *2;
+  // const functionMemo=(value)=>{
+  //   return value *2;
+  // }
+  // const memoVal= useMemo(()=> functionMemo(counter),[counter])
+
+  const [resp,setResp] = useState([
+    {id:1,name:"neha", age:25,  email:"", gender:"female"},
+    {id:2,name:"nikita", age:26,  email:"", gender:"female"},
+    {id:3,name:"rahul", age:20,  email:"", gender:"male"},
+    {id:4,name:"manoj", age:22,  email:"", gender:"male"},
+  ]);
+
+  const genericExtractColumns=(arr,columns)=>{
+    return arr.map(obj=>columns.reduce((acc,colName)=>{
+      if(obj.hasOwnProperty(colName)){
+        acc[colName]= obj[colName];
+      }
+      return acc;
+    },{}));
   }
-  const memoVal= useMemo(()=> functionMemo(counter),[counter])
+
+  const display = genericExtractColumns(resp,["name","age","email","gender"])
   return (
     <div className="App">
-      Count : {counter}
+
+      Extracted Objects :{JSON.stringify(display)}
+      {/* Count : {counter}
 <br></br>    
 
 <button onClick={()=> setCounter(counter+1)}> Increase</button>
@@ -20,7 +40,9 @@ function App() {
 <br>
 </br>
 
-Memorized Value : {memoVal}
+Memorized Value : {memoVal} */}
+
+
 </div>
   );
 }
